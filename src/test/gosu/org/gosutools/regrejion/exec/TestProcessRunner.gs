@@ -14,7 +14,6 @@ package org.gosutools.regrejion.exec
     See the License for the specific language governing permissions and
     limitations under the License.
 */
-uses java.io.ByteArrayInputStream
 uses java.util.ArrayList
 uses junit.framework.TestCase
 uses org.fest.assertions.Assertions
