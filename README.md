@@ -3,4 +3,4 @@ regrejion
 
 Regression Test Framework
 
-http://regrejion.gosutools.org/
+[documentation](http://regrejion.gosutools.org/)
