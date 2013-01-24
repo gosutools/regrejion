@@ -18,9 +18,11 @@ uses java.io.BufferedReader;
 uses java.io.InputStream;
 uses java.io.InputStreamReader;
 uses java.lang.Runnable
+uses org.gosutools.regrejion.util.Logger
 
 class Spooler implements Runnable {
   var _inStream : InputStream
+  var _logger = Logger.getLogger()
   var _outStrings : List<String>
 
   construct (inStream : InputStream, outStrings : List<String>) {
@@ -32,18 +34,18 @@ class Spooler implements Runnable {
     try {
       var bufferedReader = new BufferedReader(new InputStreamReader(_inStream))
       var line : String
-      print("Spooler: copying inStream=${_inStream} to outStrings=${_outStrings}")
+      _logger.log("Spooler: copying inStream=${_inStream} to outStrings=${_outStrings}")
       while (true) {
         line = bufferedReader.readLine()
         if (line == null) {
           break;
         }
         _outStrings.add(line)
-        print("Spooler.run add: ${line}")
+        _logger.log("Spooler.run add: ${line}")
       }
-      print("Spooler: done with inStream=${_inStream}, outStrings.size()=${_outStrings.size()}")
+      _logger.log("Spooler: done with inStream=${_inStream}, outStrings.size()=${_outStrings.size()}")
     } catch (unexpected) {
-      print("Spooler: caught unexpected=${unexpected}")
+      _logger.log("Spooler: caught unexpected=${unexpected}")
     }
   }
 

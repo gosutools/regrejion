@@ -28,8 +28,6 @@ class TestProcessRunner extends TestCase {
     var stdoutResult = results.get("stdout").Contents
     var stderrResult = results.get("stderr").Contents
 
-    print("stdoutResult=${stdoutResult}, stderrResult=${stderrResult}")
-
     Assertions.assertThat(stdoutResult).hasSize(0)
 
     Assertions.assertThat(stderrResult).isNotEmpty()
