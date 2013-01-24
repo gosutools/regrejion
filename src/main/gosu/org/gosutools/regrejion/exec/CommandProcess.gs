@@ -18,15 +18,17 @@ uses java.io.File
 uses java.lang.Process
 uses java.lang.StringBuilder
 uses org.gosutools.regrejion.exec.CommandProcess
+uses org.gosutools.regrejion.util.Logger
 
 class CommandProcess {
 
   var _command : String
   var _dir: File
+  var _logger = Logger.getLogger()
   var _process : Process
 
   construct (command : String) {
-    print("CommandProcess.construct(${command})")
+    Logger.getLogger().log("CommandProcess.construct(${command})")
     _command = command
   }
 
@@ -43,22 +45,22 @@ class CommandProcess {
   }
 
   property set Command(command: String) {
-    print("Command=${command}")
+    _logger.log("Command=${command}")
     _command = command
   }
 
   property set Dir(dir: File) {
-    print("Dir=${dir.AbsolutePath}")
+    _logger.log("Dir=${dir.AbsolutePath}")
     _dir = dir
   }
 
   property set Process(process: Process) {
-    print("Process=${process}")
+    _logger.log("Process=${process}")
     _process = process
   }
 
   function kill(reason : String) {
-    print("CommandProcess.kill(${reason}), killing process=${_process}")
+    _logger.log("CommandProcess.kill(${reason}), killing process=${_process}")
     _process.destroy()
   }
 
