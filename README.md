@@ -3,8 +3,4 @@ regrejion
 
 Regression Test Framework
 
-this is the unreleased master branch
-
-current work is being done on the develop branch
-
-[documentation](http://gosutools.org/)
+[documentation](http://regrejion.gosutools.org/)
