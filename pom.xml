@@ -43,11 +43,6 @@
             <artifactId>gosu-test-api</artifactId>
             <version>0.10-beta10</version>
         </dependency>
-        <dependency>
-            <groupId>org.gosu-lang.gosu</groupId>
-            <artifactId>gosu-xml</artifactId>
-            <version>0.10-beta10</version>
-        </dependency>
     </dependencies>
 
 </project>
