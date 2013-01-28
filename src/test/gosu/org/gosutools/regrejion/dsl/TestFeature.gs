@@ -20,6 +20,7 @@ uses org.fest.assertions.Assertions
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
 uses org.gosutools.regrejion.dsl.impl.Inspector
 uses org.gosutools.regrejion.dsl.steps.Command
+uses junit.framework.Assert
 
 class TestFeature extends TestCase {
   function testDegenerativeBuiltFeature() {
@@ -50,7 +51,7 @@ class TestFeature extends TestCase {
         .withStepsRunOnceBeforeFirstScenario({
             new Command("echo 'step 1 before first'"),
             new Command("echo 'step 2 before first'")})
-        .withStepsRunOnceBeforeFirstScenario({
+        .withStepsRunOnceBeforeEachScenario({
             new Command("echo 'step A before each'"),
             new Command("echo 'step B before each'")})
         .withScenario(new Scenario())
@@ -74,5 +75,15 @@ class TestFeature extends TestCase {
     Assertions.assertThat(subject.Built).isTrue()
 
     subject.run()
+  }
+
+  function testAnotherOne() {
+    var subject = Feature.named("foo").withPurpose("bar")
+        .withNoStepsRunOnceBeforeFirstScenario()
+        .withStepsRunOnceBeforeEachScenario({new Command("ls -e")})
+        .withScenario(new Scenario()).withNoMoreScenarios().withNoStepsRunAfterEachScenario().withNoStepsRunAfterLastScenario().build()
+
+    Assertions.assertThat(subject.FirstScenario).isNotNull()
+
   }
 }

@@ -23,7 +23,7 @@ abstract class FeatureBeforeFirstScenario implements InspectableFeature {
     return Builder.featureWithStepsBeforeEachScenario(this, {})
   }
 
-  function withStepsRunOnceBeforeFirstScenario(steps: List <? extends Step>): FeatureBeforeEachScenario {
+  function withStepsRunOnceBeforeEachScenario(steps: List <? extends Step>): FeatureBeforeEachScenario {
     return Builder.featureWithStepsBeforeEachScenario(this, steps)
   }
 }
