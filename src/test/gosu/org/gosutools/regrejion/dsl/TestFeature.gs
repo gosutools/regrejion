@@ -27,7 +27,8 @@ class TestFeature extends TestCase {
         .withPurpose("y")
         .withNoStepsRunOnceBeforeFirstScenario()
         .withNoStepsRunBeforeEachScenario()
-        .withScenarios({new Scenario()})
+        .withScenario(new Scenario())
+        .withNoMoreScenarios()
         .withNoStepsRunAfterEachScenario()
         .withNoStepsRunAfterLastScenario()
         .build()
@@ -36,7 +37,8 @@ class TestFeature extends TestCase {
     Assertions.assertThat(subject.Purpose).contains("y")
     Assertions.assertThat(subject.StepsBeforeFirstScenario).hasSize(0)
     Assertions.assertThat(subject.StepsBeforeEachScenario).hasSize(0)
-    Assertions.assertThat(subject.Scenarios).hasSize(1)
+    Assertions.assertThat(subject.FirstScenario).isNotNull()
+    Assertions.assertThat(subject.MoreScenarios).hasSize(0)
     Assertions.assertThat(subject.StepsAfterEachScenario).hasSize(0)
     Assertions.assertThat(subject.StepsAfterLastScenario).hasSize(0)
     Assertions.assertThat(subject.Built).isTrue()
@@ -45,20 +47,32 @@ class TestFeature extends TestCase {
   function testTypicalBuiltFeature() {
     var subject = Feature.named("foo")
         .withPurpose("bar")
-        .withStepsRunOnceBeforeFirstScenario({new Command("echo 'before first'")})
-        .withStepsRunOnceBeforeFirstScenario({new Command("echo 'before each'")})
-        .withScenarios({new Scenario()})
-        .withStepsRunAfterEachScenario({new Command("echo 'after each'")})
-        .withStepsRunAfterEachScenario({new Command("echo 'after last'")})
+        .withStepsRunOnceBeforeFirstScenario({
+            new Command("echo 'step 1 before first'"),
+            new Command("echo 'step 2 before first'")})
+        .withStepsRunOnceBeforeFirstScenario({
+            new Command("echo 'step A before each'"),
+            new Command("echo 'step B before each'")})
+        .withScenario(new Scenario())
+        .withMoreScenarios({new Scenario()})
+        .withStepsRunAfterEachScenario({
+            new Command("echo 'step W after each'"),
+            new Command("echo 'step X after each'")})
+        .withStepsRunAfterEachScenario({
+            new Command("echo 'step Y after last'"),
+            new Command("echo 'step Z after last'")})
         .build()
 
     Assertions.assertThat(subject.Name).contains("foo")
     Assertions.assertThat(subject.Purpose).contains("bar")
-    Assertions.assertThat(subject.StepsBeforeFirstScenario).hasSize(1)
-    Assertions.assertThat(subject.StepsBeforeEachScenario).hasSize(1)
-    Assertions.assertThat(subject.Scenarios).hasSize(1)
-    Assertions.assertThat(subject.StepsAfterEachScenario).hasSize(1)
-    Assertions.assertThat(subject.StepsAfterLastScenario).hasSize(1)
+    Assertions.assertThat(subject.StepsBeforeFirstScenario).hasSize(2)
+    Assertions.assertThat(subject.StepsBeforeEachScenario).hasSize(2)
+    Assertions.assertThat(subject.FirstScenario).isNotNull()
+    Assertions.assertThat(subject.MoreScenarios).hasSize(1)
+    Assertions.assertThat(subject.StepsAfterEachScenario).hasSize(2)
+    Assertions.assertThat(subject.StepsAfterLastScenario).hasSize(2)
     Assertions.assertThat(subject.Built).isTrue()
+
+    subject.run()
   }
 }

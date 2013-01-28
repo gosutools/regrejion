@@ -20,7 +20,11 @@ uses org.gosutools.regrejion.dsl.steps.Step
 uses org.gosutools.regrejion.dsl.Scenario
 
 abstract class FeatureBeforeEachScenario implements InspectableFeature {
-  function withScenarios(scenarios: List <Scenario>): FeatureWithScenarios {
-    return Builder.featureWithScenarios(this, scenarios)
+  function withScenario(firstScenario: Scenario): FeatureWithOneScenario {
+//    return null
+    return Builder.featureWithOneScenario(this, firstScenario)
   }
+//  function withMoreScenarios(scenarios: List <Scenario>): FeatureWithScenarios {
+//    return Builder.featureWithScenarios(this, scenarios)
+//  }
 }
