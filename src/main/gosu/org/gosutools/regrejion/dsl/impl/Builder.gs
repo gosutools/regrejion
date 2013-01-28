@@ -27,6 +27,7 @@ uses org.gosutools.regrejion.dsl.impl.InspectorImpl
 uses org.gosutools.regrejion.dsl.steps.Step
 uses org.gosutools.regrejion.dsl.Feature
 uses org.gosutools.regrejion.dsl.Scenario
+uses org.gosutools.regrejion.dsl.feature.FeatureWithOneScenario
 
 class Builder {
   static function namedFeature(feature: Feature, name: String): NamedFeature {
@@ -56,10 +57,17 @@ class Builder {
     return it
   }
 
-  static function featureWithScenarios(featureWithStepsBeforeEachScenario: FeatureBeforeEachScenario,
+  static function featureWithOneScenario(featureWithStepsBeforeEachScenario: FeatureBeforeEachScenario,
+                                       scenario: Scenario): FeatureWithOneScenario {
+    var it = new FeatureWithOneScenario() {}
+    mapToNextInspector(it, featureWithStepsBeforeEachScenario).FirstScenario = scenario
+    return it
+  }
+
+  static function featureWithScenarios(featureWithOneScenario: FeatureWithOneScenario,
                                        scenarios: List<Scenario>): FeatureWithScenarios {
     var it = new FeatureWithScenarios() {}
-    mapToNextInspector(it, featureWithStepsBeforeEachScenario).Scenarios = scenarios
+    mapToNextInspector(it, featureWithOneScenario).MoreScenarios = scenarios
     return it
   }
 

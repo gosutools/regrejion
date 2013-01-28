@@ -13,15 +13,18 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.steps
+package org.gosutools.regrejion.dsl.feature
 
-class Command extends Step {
-  var _command: String as readonly Command
-  construct(command: String) {
-    _command = command
-  }
-  override function run( runner (x : String)) {
-    runner(_command)
+uses org.gosutools.regrejion.dsl.steps.Step
+uses org.gosutools.regrejion.dsl.impl.Builder
+uses org.gosutools.regrejion.dsl.Scenario
+
+abstract class FeatureWithOneScenario implements InspectableFeature {
+  function withNoMoreScenarios(): FeatureWithScenarios {
+    return Builder.featureWithScenarios(this, {})
   }
 
+  function withMoreScenarios(scenarios: List <Scenario>): FeatureWithScenarios {
+    return Builder.featureWithScenarios(this, scenarios)
+  }
 }

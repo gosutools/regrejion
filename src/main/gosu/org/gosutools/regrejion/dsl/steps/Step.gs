@@ -16,4 +16,7 @@
 package org.gosutools.regrejion.dsl.steps
 
 abstract class Step {
+  function run( runner (x : String)) {
+    runner("nop")
+  }
 }
