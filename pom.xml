@@ -21,6 +21,16 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/gosu</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>src/test/gosu</directory>
+            </testResource>
+        </testResources>
     </build>
 
     <repositories>
@@ -41,6 +51,11 @@
         <dependency>
             <groupId>org.gosu-lang.gosu</groupId>
             <artifactId>gosu-test-api</artifactId>
+            <version>0.10-beta10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gosu-lang.gosu</groupId>
+            <artifactId>gosu-core</artifactId>
             <version>0.10-beta10</version>
         </dependency>
     </dependencies>
