@@ -21,6 +21,8 @@ uses java.util.Map
 uses org.gosutools.regrejion.exec.CommandProcess
 uses org.gosutools.regrejion.exec.ProcessRunner
 uses org.gosutools.regrejion.impl.ActualResult
+uses org.gosutools.regrejion.dsl.steps.Step
+uses org.gosutools.regrejion.api.Result
 
 class FeatureRunner {
   var _feature : BuiltFeature
@@ -29,36 +31,42 @@ class FeatureRunner {
   }
   function run() {
     var accumulator = new ArrayList<Map<String, ActualResult>>()
-//    _feature.StepsBeforeFirstScenario.each( \ step ->  {
-//      step.run( \ x -> accumulator.add(runOne(x)))
-//    })
-//    _feature.StepsBeforeEachScenario.each( \ step -> {
-//      step.run( \ x -> accumulator.add(runOne(x)))
-//    })
-//    var scenario1label = new HashMap<String, ActualResult>()
-//    scenario1label.put("stdout", new ActualResult() { :Contents = {"${_feature.FirstScenario}"}})
-//    accumulator.add(scenario1label)
-//    _feature.StepsAfterEachScenario.each( \ step -> {
-//      step.run( \ x -> accumulator.add(runOne(x)))
-//    })
-//    _feature.MoreScenarios.each( \ scenario -> {
-//      _feature.StepsBeforeEachScenario.each( \ step -> {
-//        step.run( \ x ->  accumulator.add(runOne(x)))
-//      })
-//
-//      var scenarioNlabel = new HashMap<String, ActualResult>()
-//      scenarioNlabel.put("stdout", new ActualResult() { :Contents = {"${scenario}"}})
-//      accumulator.add(scenarioNlabel)
-//
-//      _feature.StepsAfterEachScenario.each( \ step -> {
-//        step.run( \ x -> accumulator.add(runOne(x)))
-//      })
-//    })
-//    _feature.StepsAfterLastScenario.each( \ step ->  {
-//      step.run( \ x -> accumulator.add(runOne(x)))
-//    })
-//    print("accumulator=${accumulator}")
-//    accumulator.each( \ result -> print(result.get("stdout").Contents + "\n") )
+
+    _feature.StepsBeforeFirstScenario.each( \ step : Step ->  {
+      step.run( \ x -> accumulator.add(runOne(x)))
+    })
+    _feature.StepsBeforeEachScenario.each( \ step : Step -> {
+      step.run( \ x -> accumulator.add(runOne(x)))
+    })
+    var scenario1label = new HashMap<String, ActualResult>()
+    scenario1label.put("stdout", new ActualResult() { :Contents = {"${_feature.FirstScenario}"}})
+    accumulator.add(scenario1label)
+    _feature.StepsAfterEachScenario.each( \ step : Step -> {
+      step.run( \ x -> accumulator.add(runOne(x)))
+    })
+    _feature.MoreScenarios.each( \ scenario -> {
+      _feature.StepsBeforeEachScenario.each( \ step : Step -> {
+        step.run( \ x ->  accumulator.add(runOne(x)))
+      })
+
+      var scenarioNlabel = new HashMap<String, ActualResult>()
+      scenarioNlabel.put("stdout", new ActualResult() { :Contents = {"${scenario}"}})
+      accumulator.add(scenarioNlabel)
+
+      _feature.StepsAfterEachScenario.each( \ step : Step -> {
+        step.run( \ x -> accumulator.add(runOne(x)))
+      })
+    })
+    _feature.StepsAfterLastScenario.each( \ step : Step ->  {
+      step.run( \ x -> accumulator.add(runOne(x)))
+    })
+    print("accumulator=${accumulator}")
+    accumulator.each( \ elt -> {
+      var result = elt as Map<String, ActualResult>
+      print("elt=" + elt)
+      print("result=" + result.get("stdout").Contents)
+    })
+//    accumulator.each( \ result : Map<String, ActualResult> ->  print(result.get("stdout").Contents + "\n") )
   }
   private function runOne(command : String) : Map<String,ActualResult> {
     var subject = new ProcessRunner()
