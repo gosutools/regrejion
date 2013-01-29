@@ -15,15 +15,16 @@
  */
 package org.gosutools.regrejion.dsl.feature
 
+uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
+uses org.gosutools.regrejion.dsl.impl.Inspectable
 uses org.gosutools.regrejion.dsl.steps.Step
-uses org.gosutools.regrejion.dsl.impl.Builder
 
-abstract class FeatureBeforeFirstScenario implements InspectableFeature {
+abstract class FeatureBeforeFirstScenario implements Inspectable {
   function withNoStepsRunBeforeEachScenario(): FeatureBeforeEachScenario {
-    return Builder.featureWithStepsBeforeEachScenario(this, {})
+    return FeatureBuilder.featureWithStepsBeforeEachScenario(this, {})
   }
 
   function withStepsRunOnceBeforeEachScenario(steps: List <? extends Step>): FeatureBeforeEachScenario {
-    return Builder.featureWithStepsBeforeEachScenario(this, steps)
+    return FeatureBuilder.featureWithStepsBeforeEachScenario(this, steps)
   }
 }

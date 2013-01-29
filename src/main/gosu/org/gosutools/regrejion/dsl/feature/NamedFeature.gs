@@ -15,11 +15,12 @@
  */
 package org.gosutools.regrejion.dsl.feature
 
-uses org.gosutools.regrejion.dsl.impl.Builder
+uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
+uses org.gosutools.regrejion.dsl.impl.Inspectable
 uses org.gosutools.regrejion.dsl.impl.Inspector
 
-abstract class NamedFeature implements InspectableFeature {
+abstract class NamedFeature implements Inspectable {
   function withPurpose(purpose: String): PurposefulFeature {
-    return Builder.purposefulFeature(this, purpose)
+    return FeatureBuilder.purposefulFeature(this, purpose)
   }
 }
