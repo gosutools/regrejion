@@ -19,17 +19,17 @@ uses org.gosutools.regrejion.dsl.feature.FeatureAfterEachScenario
 uses org.gosutools.regrejion.dsl.feature.FeatureAfterLastScenario
 uses org.gosutools.regrejion.dsl.feature.FeatureBeforeEachScenario
 uses org.gosutools.regrejion.dsl.feature.FeatureBeforeFirstScenario
+uses org.gosutools.regrejion.dsl.feature.FeatureWithOneScenario
 uses org.gosutools.regrejion.dsl.feature.FeatureWithScenarios
-uses org.gosutools.regrejion.dsl.feature.InspectableFeature
 uses org.gosutools.regrejion.dsl.feature.NamedFeature
 uses org.gosutools.regrejion.dsl.feature.PurposefulFeature
+uses org.gosutools.regrejion.dsl.impl.Inspectable
 uses org.gosutools.regrejion.dsl.impl.InspectorImpl
 uses org.gosutools.regrejion.dsl.steps.Step
 uses org.gosutools.regrejion.dsl.Feature
 uses org.gosutools.regrejion.dsl.Scenario
-uses org.gosutools.regrejion.dsl.feature.FeatureWithOneScenario
 
-class Builder {
+class FeatureBuilder {
   static function namedFeature(feature: Feature, name: String): NamedFeature {
     var it = new NamedFeature() {
     }
@@ -38,56 +38,64 @@ class Builder {
   }
 
   static function purposefulFeature(namedFeature: NamedFeature, purpose: String): PurposefulFeature {
-    var it = new PurposefulFeature() {}
+    var it = new PurposefulFeature() {
+    }
     mapToNextInspector(it, namedFeature).Purpose = purpose
     return it
   }
 
   static function featureWithStepsBeforeFirstScenario(purposefulFeature: PurposefulFeature,
                                                       steps: List <? extends Step>): FeatureBeforeFirstScenario {
-    var it = new FeatureBeforeFirstScenario() {}
+    var it = new FeatureBeforeFirstScenario() {
+    }
     mapToNextInspector(it, purposefulFeature).StepsBeforeFirstScenario = steps
     return it
   }
 
   static function featureWithStepsBeforeEachScenario(featureWithStepsBeforeFirstScenario: FeatureBeforeFirstScenario,
                                                      steps: List <? extends Step>): FeatureBeforeEachScenario {
-    var it = new FeatureBeforeEachScenario() {}
+    var it = new FeatureBeforeEachScenario() {
+    }
     mapToNextInspector(it, featureWithStepsBeforeFirstScenario).StepsBeforeEachScenario = steps
     return it
   }
 
   static function featureWithOneScenario(featureWithStepsBeforeEachScenario: FeatureBeforeEachScenario,
-                                       scenario: Scenario): FeatureWithOneScenario {
-    var it = new FeatureWithOneScenario() {}
+                                         scenario: BuiltScenario): FeatureWithOneScenario {
+    var it = new FeatureWithOneScenario() {
+    }
     mapToNextInspector(it, featureWithStepsBeforeEachScenario).FirstScenario = scenario
     return it
   }
 
   static function featureWithScenarios(featureWithOneScenario: FeatureWithOneScenario,
-                                       scenarios: List<Scenario>): FeatureWithScenarios {
-    var it = new FeatureWithScenarios() {}
+                                       scenarios: List <BuiltScenario>): FeatureWithScenarios {
+    var it = new FeatureWithScenarios() {
+    }
     mapToNextInspector(it, featureWithOneScenario).MoreScenarios = scenarios
     return it
   }
 
-  static function featureWithStepsAfterEachScenario(featureWithScenarios : FeatureWithScenarios,
-                                                     steps: List <? extends Step>) : FeatureAfterEachScenario {
-    var it = new FeatureAfterEachScenario() {}
+  static function featureWithStepsAfterEachScenario(featureWithScenarios: FeatureWithScenarios,
+                                                    steps: List <? extends Step>): FeatureAfterEachScenario {
+    var it = new FeatureAfterEachScenario() {
+    }
     mapToNextInspector(it, featureWithScenarios).StepsAfterEachScenario = steps
     return it
   }
 
-  static function featureWithStepsAfterLastScenario(featureWithStepsAfterEachScenario : FeatureAfterEachScenario,
-                                                    steps: List <? extends Step>) : FeatureAfterLastScenario {
-    var it = new FeatureAfterLastScenario() {}
+  static function featureWithStepsAfterLastScenario(featureWithStepsAfterEachScenario: FeatureAfterEachScenario,
+                                                    steps: List <? extends Step>): FeatureAfterLastScenario {
+    var it = new FeatureAfterLastScenario() {
+    }
     mapToNextInspector(it, featureWithStepsAfterEachScenario).StepsAfterLastScenario = steps
     return it
   }
 
   static function build(featureWithStepsAfterLastScenario: FeatureAfterLastScenario): BuiltFeature {
     var builtFeature = Inspector.inspect(featureWithStepsAfterLastScenario).BuiltFeature
-    if (true) { // @TODO check that everything is initialized
+    if (true) {
+      // @TODO check that everything is initialized
       builtFeature.Built = true
     }
     return builtFeature
@@ -95,11 +103,12 @@ class Builder {
 
   //--
 
-  static private function mapToNextInspector(nextInChain: InspectableFeature,
-                                             previous: InspectableFeature): BuiltFeature {
+  static private function mapToNextInspector(nextInChain: Inspectable,
+                                             previous: Inspectable): BuiltFeature {
     var inspector = Inspector.inspect(previous)
     if (null == inspector) {
-      inspector = new InspectorImpl(previous, new BuiltFeature() {})
+      inspector = new InspectorImpl(previous, new BuiltFeature() {
+      })
       Inspector._inspectors.put(previous, inspector)
     }
     Inspector._inspectors.put(nextInChain, inspector)

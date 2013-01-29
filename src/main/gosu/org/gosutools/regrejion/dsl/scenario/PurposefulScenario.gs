@@ -13,18 +13,18 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.feature
+package org.gosutools.regrejion.dsl.scenario
 
-uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
 uses org.gosutools.regrejion.dsl.impl.Inspectable
-uses org.gosutools.regrejion.dsl.steps.Step
+uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
+uses org.gosutools.regrejion.dsl.steps.Preparation
 
-abstract class FeatureBeforeFirstScenario implements Inspectable {
-  function withNoStepsRunBeforeEachScenario(): FeatureBeforeEachScenario {
-    return FeatureBuilder.featureWithStepsBeforeEachScenario(this, {})
+class PurposefulScenario implements Inspectable{
+  function withNoPreparationsBeforeSubject(): ScenarioWithPreparationsBeforeSubject {
+    return ScenarioBuilder.scenarioWithPreparationsBeforeSubject(this, {})
   }
 
-  function withStepsRunOnceBeforeFirstScenario(steps: List <? extends Step>): FeatureBeforeEachScenario {
-    return FeatureBuilder.featureWithStepsBeforeEachScenario(this, steps)
+  function withPrepartionsBeforeSubject(preparations: List <? extends Preparation>): ScenarioWithPreparationsBeforeSubject {
+    return ScenarioBuilder.scenarioWithPreparationsBeforeSubject(this, preparations)
   }
 }

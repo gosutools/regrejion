@@ -20,14 +20,30 @@ uses org.fest.assertions.Assertions
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
 uses org.gosutools.regrejion.dsl.impl.Inspector
 uses org.gosutools.regrejion.dsl.steps.Command
+uses org.gosutools.regrejion.dsl.steps.Preparation
+uses org.gosutools.regrejion.dsl.steps.Subject
+uses org.gosutools.regrejion.dsl.steps.Verification
+uses org.gosutools.regrejion.dsl.impl.BuiltScenario
 
 class TestFeature extends TestCase {
   function testDegenerativeBuiltFeature() {
+
+    var prep1 = new Preparation() {}
+    var prep2 = new Preparation() {}
+    var verify1 = new Verification() {}
+    var verify2 = new Verification() {}
+    var scenario = Scenario.named("s1")
+        .withPurpose("s1p")
+        .withPrepartionsBeforeSubject({prep1, prep2})
+        .withSubject(new Subject(){})
+        .withVerificationsAfterSubject({verify1, verify2})
+        .build()
+
     var subject = Feature.named("x")
         .withPurpose("y")
         .withNoStepsRunOnceBeforeFirstScenario()
         .withNoStepsRunBeforeEachScenario()
-        .withScenario(new Scenario())
+        .withScenario(scenario)
         .withNoMoreScenarios()
         .withNoStepsRunAfterEachScenario()
         .withNoStepsRunAfterLastScenario()
@@ -53,8 +69,8 @@ class TestFeature extends TestCase {
         .withStepsRunOnceBeforeFirstScenario({
             new Command("echo 'step A before each'"),
             new Command("echo 'step B before each'")})
-        .withScenario(new Scenario())
-        .withMoreScenarios({new Scenario()})
+        .withScenario(new BuiltScenario())       // @TODO make BuiltScenarion ctor private, hide factory
+        .withMoreScenarios({new BuiltScenario()})
         .withStepsRunAfterEachScenario({
             new Command("echo 'step W after each'"),
             new Command("echo 'step X after each'")})
