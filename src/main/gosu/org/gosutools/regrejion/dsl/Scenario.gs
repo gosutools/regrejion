@@ -15,5 +15,12 @@
  */
 package org.gosutools.regrejion.dsl
 
-class Scenario {
-}
+uses org.gosutools.regrejion.dsl.impl.Inspectable
+uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
+uses org.gosutools.regrejion.dsl.scenario.NamedScenario
+
+class Scenario implements Inspectable{
+  static function named(name: String): NamedScenario {
+    return ScenarioBuilder.namedScenario(new Scenario() {
+    }, name)
+  }}

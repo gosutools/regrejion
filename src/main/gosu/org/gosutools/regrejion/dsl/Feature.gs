@@ -15,14 +15,14 @@
  */
 package org.gosutools.regrejion.dsl
 
-uses org.gosutools.regrejion.dsl.feature.InspectableFeature
 uses org.gosutools.regrejion.dsl.feature.NamedFeature
-uses org.gosutools.regrejion.dsl.impl.Builder
+uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
+uses org.gosutools.regrejion.dsl.impl.Inspectable
 uses org.gosutools.regrejion.dsl.impl.Inspector
 
-class Feature implements InspectableFeature {
+class Feature implements Inspectable {
   static function named(name: String): NamedFeature {
-    return Builder.namedFeature(new Feature() {
+    return FeatureBuilder.namedFeature(new Feature() {
     }, name)
   }
 }

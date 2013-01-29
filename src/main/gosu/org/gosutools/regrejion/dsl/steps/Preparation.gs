@@ -13,9 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.feature
+package org.gosutools.regrejion.dsl.steps
+class Preparation extends Step {
 
-uses org.gosutools.regrejion.dsl.impl.Inspector
-
-interface InspectableFeature {
 }
