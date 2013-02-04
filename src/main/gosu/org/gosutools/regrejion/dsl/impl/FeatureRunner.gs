@@ -44,7 +44,7 @@ class FeatureRunner {
     _feature.StepsAfterEachScenario.each( \ step : Step -> {
       step.run( \ x -> accumulator.add(runOne(x)))
     })
-    _feature.MoreScenarios.each( \ scenario -> {
+    _feature.MoreScenarios.each( \ scenario : BuiltScenario -> {
       _feature.StepsBeforeEachScenario.each( \ step : Step -> {
         step.run( \ x ->  accumulator.add(runOne(x)))
       })
@@ -61,8 +61,8 @@ class FeatureRunner {
       step.run( \ x -> accumulator.add(runOne(x)))
     })
     print("accumulator=${accumulator}")
-    accumulator.each( \ elt -> {
-      var result = elt as Map<String, ActualResult>
+    accumulator.each( \ elt : Map<String, ActualResult> -> {
+      var result = elt
       print("elt=" + elt)
       print("result=" + result.get("stdout").Contents)
     })
