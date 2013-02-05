@@ -13,15 +13,14 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.steps
+package org.gosutools.regrejion.dsl.steps.builtin
 
-class Command extends Step {
-  var _command: String as readonly Command
-  construct(command: String) {
-    _command = command
-  }
-  override function run() {
-    _runner(_command)
-  }
+uses org.gosutools.regrejion.dsl.steps.Step
+uses java.lang.System
 
+class EchoEnvironmentVariable extends Step {
+      var _name: String as Name
+      override function run() {
+        System.out.println(System.getenv(_name))
+      }
 }
