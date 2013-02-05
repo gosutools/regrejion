@@ -18,7 +18,7 @@ package org.gosutools.regrejion.dsl.steps.builtin
 uses org.gosutools.regrejion.dsl.steps.Step
 uses java.lang.System
 
-class EchoCommand extends Step {
+class EchoMessageStdout extends Step {
   var _message: String as Message
   override function run() {
     System.out.println(_message)

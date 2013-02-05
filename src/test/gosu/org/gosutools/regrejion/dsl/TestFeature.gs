@@ -19,9 +19,8 @@ uses junit.framework.TestCase
 uses org.fest.assertions.Assertions
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
 uses org.gosutools.regrejion.dsl.impl.Inspector
-uses org.gosutools.regrejion.dsl.steps.Command
-uses org.gosutools.regrejion.dsl.steps.builtin.EchoCommand
-uses junit.framework.Assert
+uses org.gosutools.regrejion.dsl.steps.builtin.EchoEnvironmentVariable
+uses org.gosutools.regrejion.dsl.steps.builtin.EchoMessageStdout
 uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.dsl.steps.Subject
 uses org.gosutools.regrejion.dsl.steps.Verification
@@ -66,19 +65,19 @@ class TestFeature extends TestCase {
     var subject = Feature.named("foo")
         .withPurpose("bar")
         .withStepsRunOnceBeforeFirstScenario({
-            new EchoCommand() { :Message = "step 1 before first" },
-            new EchoCommand() { :Message = "step 2 before first" }})
+            new EchoMessageStdout () { :Message = "step 1 before first" },
+            new EchoMessageStdout () { :Message = "step 2 before first" }})
         .withStepsRunOnceBeforeEachScenario({
-            new EchoCommand() { :Message = "step A before each" },
-            new EchoCommand() { :Message = "step B before each" }})
+            new EchoMessageStdout () { :Message = "step A before each" },
+            new EchoMessageStdout () { :Message = "step B before each" }})
         .withScenario(new BuiltScenario())       // @TODO make BuiltScenarion ctor private, hide factory
         .withMoreScenarios({new BuiltScenario()})
         .withStepsRunAfterEachScenario({
-            new EchoCommand() { :Message = "step W after each" },
-            new EchoCommand() { :Message = "step X after each" }})
+            new EchoMessageStdout () { :Message = "step W after each" },
+            new EchoMessageStdout () { :Message = "step X after each" }})
         .withStepsRunAfterEachScenario({
-            new EchoCommand() { :Message = "step Y after last" },
-            new EchoCommand() { :Message = "step Z after last" }})
+            new EchoMessageStdout () { :Message = "step Y after last" },
+            new EchoMessageStdout () { :Message = "step Z after last" }})
         .build()
 
     Assertions.assertThat(subject.Name).contains("foo")
@@ -97,10 +96,11 @@ class TestFeature extends TestCase {
   function testAnotherOne() {
     var subject = Feature.named("foo").withPurpose("bar")
         .withNoStepsRunOnceBeforeFirstScenario()
-        .withStepsRunOnceBeforeEachScenario({new Command("ls -e")})
+        .withStepsRunOnceBeforeEachScenario({new EchoEnvironmentVariable() { :Name = "PATH"}})
         .withScenario(new BuiltScenario()).withNoMoreScenarios().withNoStepsRunAfterEachScenario().withNoStepsRunAfterLastScenario().build()
 
     Assertions.assertThat(subject.FirstScenario).isNotNull()
+    subject.run()
 
   }
 }
