@@ -20,6 +20,7 @@ uses org.fest.assertions.Assertions
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
 uses org.gosutools.regrejion.dsl.impl.Inspector
 uses org.gosutools.regrejion.dsl.steps.Command
+uses org.gosutools.regrejion.dsl.steps.builtin.EchoCommand
 uses junit.framework.Assert
 uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.dsl.steps.Subject
@@ -65,19 +66,19 @@ class TestFeature extends TestCase {
     var subject = Feature.named("foo")
         .withPurpose("bar")
         .withStepsRunOnceBeforeFirstScenario({
-            new Command("echo 'step 1 before first'"),
-            new Command("echo 'step 2 before first'")})
+            new EchoCommand() { :Message = "step 1 before first" },
+            new EchoCommand() { :Message = "step 2 before first" }})
         .withStepsRunOnceBeforeEachScenario({
-            new Command("echo 'step A before each'"),
-            new Command("echo 'step B before each'")})
+            new EchoCommand() { :Message = "step A before each" },
+            new EchoCommand() { :Message = "step B before each" }})
         .withScenario(new BuiltScenario())       // @TODO make BuiltScenarion ctor private, hide factory
         .withMoreScenarios({new BuiltScenario()})
         .withStepsRunAfterEachScenario({
-            new Command("echo 'step W after each'"),
-            new Command("echo 'step X after each'")})
+            new EchoCommand() { :Message = "step W after each" },
+            new EchoCommand() { :Message = "step X after each" }})
         .withStepsRunAfterEachScenario({
-            new Command("echo 'step Y after last'"),
-            new Command("echo 'step Z after last'")})
+            new EchoCommand() { :Message = "step Y after last" },
+            new EchoCommand() { :Message = "step Z after last" }})
         .build()
 
     Assertions.assertThat(subject.Name).contains("foo")

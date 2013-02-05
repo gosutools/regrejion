@@ -15,8 +15,9 @@
  */
 package org.gosutools.regrejion.dsl.steps
 
-abstract class Step {
-  function run( runner (x : String)) {
-    runner("nop")
-  }
+uses java.lang.Runnable
+
+abstract class Step implements Runnable {
+    protected var _runner: block(s:String) as Runner
+    override function run() {}
 }
