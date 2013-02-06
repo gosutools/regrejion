@@ -14,6 +14,11 @@
     limitations under the License.
  */
 package org.gosutools.regrejion.dsl
-class TestRunningBuiltFeatures {
 
+uses junit.framework.TestCase
+
+class TestRunningBuiltFeatures extends TestCase {
+  function testPlaceholder() {
+
+  }
 }
