@@ -23,14 +23,13 @@ uses org.gosutools.regrejion.dsl.feature.FeatureWithOneScenario
 uses org.gosutools.regrejion.dsl.feature.FeatureWithScenarios
 uses org.gosutools.regrejion.dsl.feature.NamedFeature
 uses org.gosutools.regrejion.dsl.feature.PurposefulFeature
-uses org.gosutools.regrejion.dsl.impl.Inspectable
-uses org.gosutools.regrejion.dsl.impl.InspectorImpl
+uses org.gosutools.regrejion.dsl.impl.FeatureInspectorImpl
 uses org.gosutools.regrejion.dsl.steps.Step
 uses org.gosutools.regrejion.dsl.Feature
 uses org.gosutools.regrejion.dsl.Scenario
 
 class FeatureBuilder {
-  static function namedFeature(feature: Feature, name: String): NamedFeature {
+  static function namedFeature(feature: InspectableFeature, name: String): NamedFeature {
     var it = new NamedFeature() {
     }
     mapToNextInspector(it, feature).Name = name
@@ -93,7 +92,7 @@ class FeatureBuilder {
   }
 
   static function build(featureWithStepsAfterLastScenario: FeatureAfterLastScenario): BuiltFeature {
-    var builtFeature = Inspector.inspect(featureWithStepsAfterLastScenario).BuiltFeature
+    var builtFeature = FeatureInspector.inspect(featureWithStepsAfterLastScenario).BuiltFeature
     if (true) {
       // @TODO check that everything is initialized
       builtFeature.Built = true
@@ -103,15 +102,15 @@ class FeatureBuilder {
 
   //--
 
-  static private function mapToNextInspector(nextInChain: Inspectable,
-                                             previous: Inspectable): BuiltFeature {
-    var inspector = Inspector.inspect(previous)
+  static private function mapToNextInspector(nextInChain: InspectableFeature,
+                                             previous: InspectableFeature): BuiltFeature {
+    var inspector = FeatureInspector.inspect(previous)
     if (null == inspector) {
-      inspector = new InspectorImpl(previous, new BuiltFeature() {
+      inspector = new FeatureInspectorImpl (previous, new BuiltFeature() {
       })
-      Inspector._inspectors.put(previous, inspector)
+      FeatureInspector._inspectors.put(previous, inspector)
     }
-    Inspector._inspectors.put(nextInChain, inspector)
+    FeatureInspector._inspectors.put(nextInChain, inspector)
     return inspector.BuiltFeature
   }
 }

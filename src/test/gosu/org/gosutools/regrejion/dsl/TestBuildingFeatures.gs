@@ -18,7 +18,7 @@ package org.gosutools.regrejion.dsl
 uses junit.framework.TestCase
 uses org.fest.assertions.Assertions
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
-uses org.gosutools.regrejion.dsl.impl.Inspector
+uses org.gosutools.regrejion.dsl.impl.FeatureInspector
 uses org.gosutools.regrejion.dsl.steps.builtin.EchoEnvironmentVariable
 uses org.gosutools.regrejion.dsl.steps.builtin.EchoMessageStdout
 uses org.gosutools.regrejion.dsl.steps.Preparation

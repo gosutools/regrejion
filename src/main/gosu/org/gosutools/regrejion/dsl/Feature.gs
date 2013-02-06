@@ -17,10 +17,10 @@ package org.gosutools.regrejion.dsl
 
 uses org.gosutools.regrejion.dsl.feature.NamedFeature
 uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
-uses org.gosutools.regrejion.dsl.impl.Inspectable
-uses org.gosutools.regrejion.dsl.impl.Inspector
+uses org.gosutools.regrejion.dsl.impl.FeatureInspector
+uses org.gosutools.regrejion.dsl.impl.InspectableFeature
 
-class Feature implements Inspectable {
+class Feature implements InspectableFeature {
   static function named(name: String): NamedFeature {
     return FeatureBuilder.namedFeature(new Feature() {
     }, name)

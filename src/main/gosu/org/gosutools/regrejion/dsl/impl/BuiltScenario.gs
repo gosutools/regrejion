@@ -21,7 +21,7 @@ uses org.gosutools.regrejion.dsl.steps.Verification
 class BuiltScenario {
   var _built: boolean as Built
   var _name: String as Name
-  var _prepartions: List <Preparation> as Preparations
+  var _preparations: List <Preparation> as Preparations
   var _purpose: String as Purpose
   var _subject: Object as Subject
   var _verifications: List <Verification> as Verifications

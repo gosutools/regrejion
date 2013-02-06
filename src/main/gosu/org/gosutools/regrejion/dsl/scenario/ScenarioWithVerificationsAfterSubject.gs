@@ -16,10 +16,10 @@
 package org.gosutools.regrejion.dsl.scenario
 
 uses org.gosutools.regrejion.dsl.impl.BuiltScenario
-uses org.gosutools.regrejion.dsl.impl.Inspectable
+uses org.gosutools.regrejion.dsl.impl.InspectableScenario
 uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
 
-class ScenarioWithVerificationsAfterSubject implements Inspectable{
+class ScenarioWithVerificationsAfterSubject implements InspectableScenario {
   function build(): BuiltScenario {
     return ScenarioBuilder.build(this)
   }

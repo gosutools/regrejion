@@ -15,7 +15,6 @@
  */
 package org.gosutools.regrejion.dsl.impl
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
 uses org.gosutools.regrejion.dsl.scenario.NamedScenario
 uses org.gosutools.regrejion.dsl.scenario.PurposefulScenario
 uses org.gosutools.regrejion.dsl.scenario.ScenarioWithPreparationsBeforeSubject
@@ -29,15 +28,15 @@ uses org.gosutools.regrejion.dsl.Scenario
 class ScenarioBuilder {
   static function namedScenario(scenario: Scenario, name: String): NamedScenario {
     var it = new NamedScenario() {
-  }
-    // @TODO mapToNextInspector(it, Scenario).Name = name
+    }
+    mapToNextInspector(it, scenario).Name = name
     return it
   }
 
   static function purposefulScenario(namedScenario: NamedScenario, purpose: String): PurposefulScenario {
     var it = new PurposefulScenario() {
   }
-    // @TODO mapToNextInspector(it, namedScenario).Purpose = purpose
+    mapToNextInspector(it, namedScenario).Purpose = purpose
     return it
   }
 
@@ -45,7 +44,7 @@ class ScenarioBuilder {
                                                       preparations: List <? extends Preparation>): ScenarioWithPreparationsBeforeSubject {
     var it = new ScenarioWithPreparationsBeforeSubject() {
   }
-    // @TODO mapToNextInspector(it, purposefulScenario).Preparations = preparations
+    mapToNextInspector(it, purposefulScenario).Preparations = preparations
     return it
   }
 
@@ -53,7 +52,7 @@ class ScenarioBuilder {
                                                      subject: Subject): ScenarioWithSubject {
     var it = new ScenarioWithSubject() {
   }
-    // @TODO mapToNextInspector(it, scenarioWithPreparationsBeforeSubject).Subject = subject
+    mapToNextInspector(it, scenarioWithPreparationsBeforeSubject).Subject = subject
     return it
   }
 
@@ -74,4 +73,15 @@ class ScenarioBuilder {
     return builtScenario
   }
 
+  static private function mapToNextInspector(nextInChain: InspectableScenario,
+                                             previous: InspectableScenario): BuiltScenario {
+    var inspector = ScenarioInspector.inspect(previous)
+    if (null == inspector) {
+      inspector = new ScenarioInspectorImpl (previous, new BuiltScenario()) {
+      }
+      ScenarioInspector._inspectors.put(previous, inspector)
+    }
+    ScenarioInspector._inspectors.put(nextInChain, inspector)
+    return inspector.BuiltScenario
+  }
 }
