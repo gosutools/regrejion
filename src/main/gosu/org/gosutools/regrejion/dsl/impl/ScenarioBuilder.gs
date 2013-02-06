@@ -30,14 +30,14 @@ class ScenarioBuilder {
   static function namedScenario(scenario: Scenario, name: String): NamedScenario {
     var it = new NamedScenario() {
   }
-    //mapToNextInspector(it, Scenario).Name = name
+    // @TODO mapToNextInspector(it, Scenario).Name = name
     return it
   }
 
   static function purposefulScenario(namedScenario: NamedScenario, purpose: String): PurposefulScenario {
     var it = new PurposefulScenario() {
   }
-    //mapToNextInspector(it, namedScenario).Purpose = purpose
+    // @TODO mapToNextInspector(it, namedScenario).Purpose = purpose
     return it
   }
 
@@ -45,7 +45,7 @@ class ScenarioBuilder {
                                                       preparations: List <? extends Preparation>): ScenarioWithPreparationsBeforeSubject {
     var it = new ScenarioWithPreparationsBeforeSubject() {
   }
-    //mapToNextInspector(it, purposefulScenario).Preparations = preparations
+    // @TODO mapToNextInspector(it, purposefulScenario).Preparations = preparations
     return it
   }
 
@@ -53,7 +53,7 @@ class ScenarioBuilder {
                                                      subject: Subject): ScenarioWithSubject {
     var it = new ScenarioWithSubject() {
   }
-    //mapToNextInspector(it, scenarioWithPreparationsBeforeSubject).Subject = subject
+    // @TODO mapToNextInspector(it, scenarioWithPreparationsBeforeSubject).Subject = subject
     return it
   }
 
@@ -61,7 +61,7 @@ class ScenarioBuilder {
                                       verifications: List <? extends Verification>): ScenarioWithVerificationsAfterSubject {
     var it = new ScenarioWithVerificationsAfterSubject() {
     }
-    //mapToNextInspector(it, scenarioWithVerificationsAfterSubject).Verifications = verifications
+    // @TODO mapToNextInspector(it, scenarioWithVerificationsAfterSubject).Verifications = verifications
     return it
   }
 

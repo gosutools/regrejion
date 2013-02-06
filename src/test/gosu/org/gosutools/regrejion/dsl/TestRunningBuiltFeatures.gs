@@ -13,18 +13,7 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.feature
+package org.gosutools.regrejion.dsl
+class TestRunningBuiltFeatures {
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
-uses org.gosutools.regrejion.dsl.steps.Step
-uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
-
-abstract class FeatureAfterEachScenario implements Inspectable {
-  function withNoStepsRunAfterLastScenario(): FeatureAfterLastScenario {
-    return FeatureBuilder.featureWithStepsAfterLastScenario(this, {})
-  }
-
-  function withStepsRunAfterLastScenario(steps: List <? extends Step>): FeatureAfterLastScenario {
-    return FeatureBuilder.featureWithStepsAfterLastScenario(this, steps)
-  }
 }

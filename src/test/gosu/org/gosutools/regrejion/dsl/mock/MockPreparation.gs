@@ -13,18 +13,16 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.feature
+package org.gosutools.regrejion.dsl.mock
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
-uses org.gosutools.regrejion.dsl.steps.Step
-uses org.gosutools.regrejion.dsl.impl.FeatureBuilder
+uses org.gosutools.regrejion.dsl.steps.Preparation
+/**
+ * Created with IntelliJ IDEA.
+ * User: mwright
+ * Date: 2/5/13
+ * Time: 3:45 PM
+ * To change this template use File | Settings | File Templates.
+ */
+class MockPreparation extends Preparation {
 
-abstract class FeatureAfterEachScenario implements Inspectable {
-  function withNoStepsRunAfterLastScenario(): FeatureAfterLastScenario {
-    return FeatureBuilder.featureWithStepsAfterLastScenario(this, {})
-  }
-
-  function withStepsRunAfterLastScenario(steps: List <? extends Step>): FeatureAfterLastScenario {
-    return FeatureBuilder.featureWithStepsAfterLastScenario(this, steps)
-  }
 }
