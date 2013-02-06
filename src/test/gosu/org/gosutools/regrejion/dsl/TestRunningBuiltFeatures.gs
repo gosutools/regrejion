@@ -24,7 +24,7 @@ uses org.gosutools.regrejion.dsl.double.SpyPreparation
 class TestRunningBuiltFeatures extends TestCase {
   function testRunningDegenerateFeature() {
      var subject = SubjectFeatureFactory.createDegenerateSubjectFeatureSpy("degenerate","test running",new SpyScenario())
-     subject.FirstScenario.Preparations.each( \ elt -> {
+     subject.FirstScenario.Preparations.each( \ elt : Preparation -> {
        var preparation = elt as SpyPreparation
        print("trdf preparation.Ran=${preparation.Ran}")  // @TODO get this to print true (implement scenario running)
      })
