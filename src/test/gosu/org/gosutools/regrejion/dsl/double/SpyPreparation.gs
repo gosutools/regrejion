@@ -13,16 +13,13 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.mock
+package org.gosutools.regrejion.dsl.double
 
 uses org.gosutools.regrejion.dsl.steps.Preparation
-/**
- * Created with IntelliJ IDEA.
- * User: mwright
- * Date: 2/5/13
- * Time: 3:45 PM
- * To change this template use File | Settings | File Templates.
- */
-class MockPreparation extends Preparation {
 
+class SpyPreparation extends Preparation {
+   var _ran : Boolean as Ran = false
+  override function run() {
+    _ran = true
+  }
 }

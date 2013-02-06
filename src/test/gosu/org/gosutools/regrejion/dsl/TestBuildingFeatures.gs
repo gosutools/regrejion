@@ -25,28 +25,32 @@ uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.dsl.steps.Subject
 uses org.gosutools.regrejion.dsl.steps.Verification
 uses org.gosutools.regrejion.dsl.impl.BuiltScenario
-uses org.gosutools.regrejion.dsl.mock.MockScenario
+uses org.gosutools.regrejion.dsl.double.DummyScenario
+uses org.gosutools.regrejion.dsl.common.SubjectFeatureFactory
 
 class TestBuildingFeatures extends TestCase {
 
+  final static var FEATURE_NAME_DEGENERATE = "degenerate"
+  final static var FEATURE_NAME_TYPICAL = "typical"
+  final static var FEATURE_PURPOSE_DEGENERATE = "test simplest feature building"
+  final static var FEATURE_PURPOSE_TYPICAL = "test typical feature building"
+  final static var FEATURE_SINGLE_SCENARIO_DEGENERATE = new DummyScenario ()
+  final static var FEATURE_SINGLE_SCENARIO_TYPICAL1 = new DummyScenario ()
+  final static var FEATURE_SINGLE_SCENARIO_TYPICAL2 = new DummyScenario ()
+
   function testDegenerativeBuiltFeature() {
 
+    var subject = SubjectFeatureFactory
+        .createDegenerateSubjectFeatureSpy(FEATURE_NAME_DEGENERATE,
+            FEATURE_PURPOSE_DEGENERATE,
+            FEATURE_SINGLE_SCENARIO_DEGENERATE)
 
-    var subject = Feature.named("x")
-        .withPurpose("y")
-        .withNoStepsRunOnceBeforeFirstScenario()
-        .withNoStepsRunBeforeEachScenario()
-        .withScenario(new MockScenario())
-        .withNoMoreScenarios()
-        .withNoStepsRunAfterEachScenario()
-        .withNoStepsRunAfterLastScenario()
-        .build()
-
-    Assertions.assertThat(subject.Name).contains("x")
-    Assertions.assertThat(subject.Purpose).contains("y")
+    Assertions.assertThat(subject.Name).contains(FEATURE_NAME_DEGENERATE)
+    Assertions.assertThat(subject.Purpose).contains(FEATURE_PURPOSE_DEGENERATE)
     Assertions.assertThat(subject.StepsBeforeFirstScenario).hasSize(0)
     Assertions.assertThat(subject.StepsBeforeEachScenario).hasSize(0)
     Assertions.assertThat(subject.FirstScenario).isNotNull()
+    Assertions.assertThat(subject.FirstScenario).isEqualTo(FEATURE_SINGLE_SCENARIO_DEGENERATE)
     Assertions.assertThat(subject.MoreScenarios).hasSize(0)
     Assertions.assertThat(subject.StepsAfterEachScenario).hasSize(0)
     Assertions.assertThat(subject.StepsAfterLastScenario).hasSize(0)
@@ -54,16 +58,16 @@ class TestBuildingFeatures extends TestCase {
   }
 
   function testTypicalBuiltFeature() {
-    var subject = Feature.named("foo")
-        .withPurpose("bar")
+    var subject = Feature.named(FEATURE_NAME_TYPICAL)
+        .withPurpose(FEATURE_PURPOSE_TYPICAL)
         .withStepsRunOnceBeforeFirstScenario({
             new EchoMessageStdout () { :Message = "step 1 before first" },
             new EchoMessageStdout () { :Message = "step 2 before first" }})
         .withStepsRunOnceBeforeEachScenario({
             new EchoMessageStdout () { :Message = "step A before each" },
             new EchoMessageStdout () { :Message = "step B before each" }})
-        .withScenario(new BuiltScenario())       // @TODO make BuiltScenario ctor private, hide factory
-        .withMoreScenarios({new BuiltScenario()})
+        .withScenario(FEATURE_SINGLE_SCENARIO_TYPICAL1)
+        .withMoreScenarios({FEATURE_SINGLE_SCENARIO_TYPICAL2})
         .withStepsRunAfterEachScenario({
             new EchoMessageStdout () { :Message = "step W after each" },
             new EchoMessageStdout () { :Message = "step X after each" }})
@@ -72,12 +76,14 @@ class TestBuildingFeatures extends TestCase {
             new EchoMessageStdout () { :Message = "step Z after last" }})
         .build()
 
-    Assertions.assertThat(subject.Name).contains("foo")
-    Assertions.assertThat(subject.Purpose).contains("bar")
+    Assertions.assertThat(subject.Name).contains(FEATURE_NAME_TYPICAL)
+    Assertions.assertThat(subject.Purpose).contains(FEATURE_PURPOSE_TYPICAL)
     Assertions.assertThat(subject.StepsBeforeFirstScenario).hasSize(2)
     Assertions.assertThat(subject.StepsBeforeEachScenario).hasSize(2)
     Assertions.assertThat(subject.FirstScenario).isNotNull()
+    Assertions.assertThat(subject.FirstScenario).isEqualTo(FEATURE_SINGLE_SCENARIO_TYPICAL1)
     Assertions.assertThat(subject.MoreScenarios).hasSize(1)
+    Assertions.assertThat(subject.MoreScenarios.get(0)).isEqualTo(FEATURE_SINGLE_SCENARIO_TYPICAL2)
     Assertions.assertThat(subject.StepsAfterEachScenario).hasSize(2)
     Assertions.assertThat(subject.StepsAfterLastScenario).hasSize(2)
     Assertions.assertThat(subject.Built).isTrue()
@@ -89,18 +95,19 @@ class TestBuildingFeatures extends TestCase {
     var subject = Feature.named("foo").withPurpose("bar")
         .withNoStepsRunOnceBeforeFirstScenario()
         .withStepsRunOnceBeforeEachScenario({new EchoEnvironmentVariable() { :Name = "PATH"}})
-        .withScenario(new BuiltScenario())
+        .withScenario(new DummyScenario ())
         .withNoMoreScenarios()
         .withNoStepsRunAfterEachScenario()
         .withNoStepsRunAfterLastScenario()
         .build()
 
     Assertions.assertThat(subject.FirstScenario).isNotNull()
-    subject.run()
+    // subject.run() @TODO move to TestRunningBuiltFeatures (along with other commented-out .run() calls)
+
     var ex = Feature.named("ex").withPurpose("demo fw")
         .withNoStepsRunOnceBeforeFirstScenario()
         .withNoStepsRunBeforeEachScenario()
-        .withScenario(new BuiltScenario())
+        .withScenario(new DummyScenario ())
         .withNoMoreScenarios()
         .withNoStepsRunAfterEachScenario()
         .withNoStepsRunAfterLastScenario()

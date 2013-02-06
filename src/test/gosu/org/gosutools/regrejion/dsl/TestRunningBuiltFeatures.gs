@@ -16,9 +16,17 @@
 package org.gosutools.regrejion.dsl
 
 uses junit.framework.TestCase
+uses org.gosutools.regrejion.dsl.common.SubjectFeatureFactory
+uses org.gosutools.regrejion.dsl.double.SpyScenario
+uses org.gosutools.regrejion.dsl.steps.Preparation
+uses org.gosutools.regrejion.dsl.double.SpyPreparation
 
 class TestRunningBuiltFeatures extends TestCase {
-  function testPlaceholder() {
-
+  function testRunningDegenerateFeature() {
+     var subject = SubjectFeatureFactory.createDegenerateSubjectFeatureSpy("degenerate","test running",new SpyScenario())
+     subject.FirstScenario.Preparations.each( \ elt -> {
+       var preparation = elt as SpyPreparation
+       print("trdf preparation.Ran=${preparation.Ran}")  // @TODO get this to print true (implement scenario running)
+     })
   }
 }

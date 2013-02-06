@@ -14,6 +14,9 @@
     limitations under the License.
  */
 package org.gosutools.regrejion.dsl.steps
-class Preparation extends Step {
-
+abstract class Preparation extends Step {
+  override property set Runner(runner:block(s:String)) {
+    super._runner = runner
+  }
+  override function run() {}
 }

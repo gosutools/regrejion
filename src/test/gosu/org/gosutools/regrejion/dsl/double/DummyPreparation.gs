@@ -13,19 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.impl
+package org.gosutools.regrejion.dsl.double
 
 uses org.gosutools.regrejion.dsl.steps.Preparation
-uses org.gosutools.regrejion.dsl.steps.Verification
-uses org.gosutools.regrejion.dsl.steps.Subject
-
-class BuiltScenario {
-  var _built: boolean as Built
-  var _name: String as Name
-  var _preparations: List <Preparation> as Preparations
-  var _purpose: String as Purpose
-  var _subject: Subject as Subject
-  var _verifications: List <Verification> as Verifications
-  protected construct() {
-  }
+class DummyPreparation extends Preparation {
+   // @TODO add exceptions for functions if/when invoked
 }
