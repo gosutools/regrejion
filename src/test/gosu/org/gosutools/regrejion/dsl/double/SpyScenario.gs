@@ -13,19 +13,22 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.impl
+package org.gosutools.regrejion.dsl.double
 
+uses org.gosutools.regrejion.dsl.impl.BuiltScenario
 uses org.gosutools.regrejion.dsl.steps.Preparation
+uses java.util.ArrayList
 uses org.gosutools.regrejion.dsl.steps.Verification
-uses org.gosutools.regrejion.dsl.steps.Subject
 
-class BuiltScenario {
-  var _built: boolean as Built
-  var _name: String as Name
-  var _preparations: List <Preparation> as Preparations
-  var _purpose: String as Purpose
-  var _subject: Subject as Subject
-  var _verifications: List <Verification> as Verifications
-  protected construct() {
-  }
+class SpyScenario extends BuiltScenario {
+   construct() {
+     super.Built = true
+     super.Name = "Spy Scenario"
+     super.Purpose = "To log execution of scenario"
+     super.Preparations = new ArrayList<Preparation>()
+     super.Preparations.add(new SpyPreparation())
+     super.Subject = new SpySubject()
+     super.Verifications = new ArrayList<Verification>()
+     super.Verifications.add(new SpyVerification())
+   }
 }

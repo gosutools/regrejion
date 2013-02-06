@@ -13,9 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.mock
+package org.gosutools.regrejion.dsl.double
 
-uses org.gosutools.regrejion.dsl.impl.BuiltScenario
-
-class MockScenario extends BuiltScenario {
+uses org.gosutools.regrejion.dsl.steps.Verification
+class SpyVerification extends Verification {
+  var _ran : Boolean as Ran = false
+  override function run() {
+    _ran = true
+  }
 }
