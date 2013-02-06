@@ -15,7 +15,5 @@
  */
 package org.gosutools.regrejion.dsl.impl
 
-
-
-interface Inspectable {
+interface InspectableFeature {
 }

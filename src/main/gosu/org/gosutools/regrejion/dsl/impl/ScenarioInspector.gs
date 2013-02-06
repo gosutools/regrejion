@@ -15,16 +15,13 @@
  */
 package org.gosutools.regrejion.dsl.impl
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
+uses java.util.Map
+uses java.util.HashMap
 
-class InspectorImpl extends Inspector {
-  var _feature: Inspectable
-  construct(feature: Inspectable, builtFeature : BuiltFeature) {
-    _feature = feature
-    super._builtFeature = builtFeature
-  }
-
-  static function addFeatureInspector(feature: Inspectable, inspector: Inspector) {
-    Inspector._inspectors.put(feature, inspector)
+class ScenarioInspector {
+  static protected var _inspectors: Map <InspectableScenario, ScenarioInspector> = new HashMap<InspectableScenario, ScenarioInspector>()
+  protected var _builtScenario: BuiltScenario as readonly BuiltScenario
+  static function inspect(scenario: InspectableScenario): ScenarioInspector {
+    return _inspectors.get(scenario)
   }
 }

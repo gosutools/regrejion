@@ -15,11 +15,11 @@
  */
 package org.gosutools.regrejion.dsl.scenario
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
+uses org.gosutools.regrejion.dsl.impl.InspectableScenario
 uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
 uses org.gosutools.regrejion.dsl.steps.Verification
 
-class ScenarioWithSubject implements Inspectable {
+class ScenarioWithSubject implements InspectableScenario {
   function withVerificationsAfterSubject(verifications: List <? extends Verification>): ScenarioWithVerificationsAfterSubject {
     return ScenarioBuilder.scenarioWithVerificationsAfterSubject(this, verifications)
   }

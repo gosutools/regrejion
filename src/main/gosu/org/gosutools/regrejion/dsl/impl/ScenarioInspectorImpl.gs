@@ -13,14 +13,16 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.scenario
+package org.gosutools.regrejion.dsl.impl
 
-uses org.gosutools.regrejion.dsl.impl.InspectableScenario
-uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
-uses org.gosutools.regrejion.dsl.steps.Subject
+class ScenarioInspectorImpl extends ScenarioInspector {
+  var _scenario: InspectableScenario
+  construct(scenario: InspectableScenario, builtScenario: BuiltScenario) {
+    _scenario = scenario
+    super._builtScenario = builtScenario
+  }
 
-class ScenarioWithPreparationsBeforeSubject implements InspectableScenario {
-  function withSubject(subject: Subject): ScenarioWithSubject {
-    return ScenarioBuilder.scenarioWithSubject(this, subject)
+  static function addFeatureInspector(scenario: InspectableScenario, inspector: ScenarioInspector) {
+    ScenarioInspector._inspectors.put(scenario, inspector)
   }
 }

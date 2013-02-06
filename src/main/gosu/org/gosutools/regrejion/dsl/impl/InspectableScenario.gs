@@ -15,14 +15,5 @@
  */
 package org.gosutools.regrejion.dsl.impl
 
-uses java.util.HashMap
-uses java.util.Map
-uses org.gosutools.regrejion.dsl.impl.Inspectable
-
-class Inspector {
-  static protected var _inspectors: Map <? extends Inspectable, Inspector> = new HashMap <? extends Inspectable, Inspector>()
-  protected var _builtFeature: BuiltFeature as readonly BuiltFeature
-  static function inspect(feature: Inspectable): Inspector {
-    return _inspectors.get(feature)
-  }
+interface InspectableScenario {
 }

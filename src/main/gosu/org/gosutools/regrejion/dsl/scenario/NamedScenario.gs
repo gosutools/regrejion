@@ -15,10 +15,11 @@
  */
 package org.gosutools.regrejion.dsl.scenario
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
+uses org.gosutools.regrejion.dsl.impl.InspectableFeature
+uses org.gosutools.regrejion.dsl.impl.InspectableScenario
 uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
 
-class NamedScenario implements Inspectable{
+class NamedScenario implements InspectableScenario {
   function withPurpose(purpose: String): PurposefulScenario {
     return ScenarioBuilder.purposefulScenario(this, purpose)
   }

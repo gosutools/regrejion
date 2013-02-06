@@ -13,14 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.scenario
+package org.gosutools.regrejion.dsl
 
-uses org.gosutools.regrejion.dsl.impl.InspectableScenario
-uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
-uses org.gosutools.regrejion.dsl.steps.Subject
+uses junit.framework.TestCase
 
-class ScenarioWithPreparationsBeforeSubject implements InspectableScenario {
-  function withSubject(subject: Subject): ScenarioWithSubject {
-    return ScenarioBuilder.scenarioWithSubject(this, subject)
+class TestRunningBuiltFeatures extends TestCase {
+  function testPlaceholder() {
+
   }
 }

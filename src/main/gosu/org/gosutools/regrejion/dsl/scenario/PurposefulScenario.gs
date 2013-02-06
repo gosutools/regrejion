@@ -15,11 +15,11 @@
  */
 package org.gosutools.regrejion.dsl.scenario
 
-uses org.gosutools.regrejion.dsl.impl.Inspectable
+uses org.gosutools.regrejion.dsl.impl.InspectableScenario
 uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
 uses org.gosutools.regrejion.dsl.steps.Preparation
 
-class PurposefulScenario implements Inspectable{
+class PurposefulScenario implements InspectableScenario {
   function withNoPreparationsBeforeSubject(): ScenarioWithPreparationsBeforeSubject {
     return ScenarioBuilder.scenarioWithPreparationsBeforeSubject(this, {})
   }

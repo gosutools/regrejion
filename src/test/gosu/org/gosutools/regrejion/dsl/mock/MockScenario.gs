@@ -13,14 +13,9 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.scenario
+package org.gosutools.regrejion.dsl.mock
 
-uses org.gosutools.regrejion.dsl.impl.InspectableScenario
-uses org.gosutools.regrejion.dsl.impl.ScenarioBuilder
-uses org.gosutools.regrejion.dsl.steps.Subject
+uses org.gosutools.regrejion.dsl.impl.BuiltScenario
 
-class ScenarioWithPreparationsBeforeSubject implements InspectableScenario {
-  function withSubject(subject: Subject): ScenarioWithSubject {
-    return ScenarioBuilder.scenarioWithSubject(this, subject)
-  }
+class MockScenario extends BuiltScenario {
 }

@@ -18,33 +18,25 @@ package org.gosutools.regrejion.dsl
 uses junit.framework.TestCase
 uses org.fest.assertions.Assertions
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
-uses org.gosutools.regrejion.dsl.impl.Inspector
+uses org.gosutools.regrejion.dsl.impl.FeatureInspector
 uses org.gosutools.regrejion.dsl.steps.builtin.EchoEnvironmentVariable
 uses org.gosutools.regrejion.dsl.steps.builtin.EchoMessageStdout
 uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.dsl.steps.Subject
 uses org.gosutools.regrejion.dsl.steps.Verification
 uses org.gosutools.regrejion.dsl.impl.BuiltScenario
+uses org.gosutools.regrejion.dsl.mock.MockScenario
 
-class TestFeature extends TestCase {
+class TestBuildingFeatures extends TestCase {
+
   function testDegenerativeBuiltFeature() {
 
-    var prep1 = new Preparation() {}
-    var prep2 = new Preparation() {}
-    var verify1 = new Verification() {}
-    var verify2 = new Verification() {}
-    var scenario = Scenario.named("s1")
-        .withPurpose("s1p")
-        .withPrepartionsBeforeSubject({prep1, prep2})
-        .withSubject(new Subject(){})
-        .withVerificationsAfterSubject({verify1, verify2})
-        .build()
 
     var subject = Feature.named("x")
         .withPurpose("y")
         .withNoStepsRunOnceBeforeFirstScenario()
         .withNoStepsRunBeforeEachScenario()
-        .withScenario(scenario)
+        .withScenario(new MockScenario())
         .withNoMoreScenarios()
         .withNoStepsRunAfterEachScenario()
         .withNoStepsRunAfterLastScenario()
@@ -70,12 +62,12 @@ class TestFeature extends TestCase {
         .withStepsRunOnceBeforeEachScenario({
             new EchoMessageStdout () { :Message = "step A before each" },
             new EchoMessageStdout () { :Message = "step B before each" }})
-        .withScenario(new BuiltScenario())       // @TODO make BuiltScenarion ctor private, hide factory
+        .withScenario(new BuiltScenario())       // @TODO make BuiltScenario ctor private, hide factory
         .withMoreScenarios({new BuiltScenario()})
         .withStepsRunAfterEachScenario({
             new EchoMessageStdout () { :Message = "step W after each" },
             new EchoMessageStdout () { :Message = "step X after each" }})
-        .withStepsRunAfterEachScenario({
+        .withStepsRunAfterLastScenario({
             new EchoMessageStdout () { :Message = "step Y after last" },
             new EchoMessageStdout () { :Message = "step Z after last" }})
         .build()
@@ -90,17 +82,30 @@ class TestFeature extends TestCase {
     Assertions.assertThat(subject.StepsAfterLastScenario).hasSize(2)
     Assertions.assertThat(subject.Built).isTrue()
 
-    subject.run()
+    //subject.run()
   }
 
   function testAnotherOne() {
     var subject = Feature.named("foo").withPurpose("bar")
         .withNoStepsRunOnceBeforeFirstScenario()
         .withStepsRunOnceBeforeEachScenario({new EchoEnvironmentVariable() { :Name = "PATH"}})
-        .withScenario(new BuiltScenario()).withNoMoreScenarios().withNoStepsRunAfterEachScenario().withNoStepsRunAfterLastScenario().build()
+        .withScenario(new BuiltScenario())
+        .withNoMoreScenarios()
+        .withNoStepsRunAfterEachScenario()
+        .withNoStepsRunAfterLastScenario()
+        .build()
 
     Assertions.assertThat(subject.FirstScenario).isNotNull()
     subject.run()
+    var ex = Feature.named("ex").withPurpose("demo fw")
+        .withNoStepsRunOnceBeforeFirstScenario()
+        .withNoStepsRunBeforeEachScenario()
+        .withScenario(new BuiltScenario())
+        .withNoMoreScenarios()
+        .withNoStepsRunAfterEachScenario()
+        .withNoStepsRunAfterLastScenario()
+        .build()
 
+    //ex.run()
   }
 }
