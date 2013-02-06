@@ -60,12 +60,12 @@ class ScenarioBuilder {
                                       verifications: List <? extends Verification>): ScenarioWithVerificationsAfterSubject {
     var it = new ScenarioWithVerificationsAfterSubject() {
     }
-    // @TODO mapToNextInspector(it, scenarioWithVerificationsAfterSubject).Verifications = verifications
+    mapToNextInspector(it, scenarioWithSubject).Verifications = verifications
     return it
   }
 
   static function build(scenarioWithVerificationsAfterSubject: ScenarioWithVerificationsAfterSubject): BuiltScenario {
-    var builtScenario = new BuiltScenario() // @TODO use inspector to initialize BuiltScenario name, purpose, etc.
+    var builtScenario = ScenarioInspector.inspect(scenarioWithVerificationsAfterSubject).BuiltScenario
     if (true) {
       // @TODO check that everything is initialized
       builtScenario.Built = true
