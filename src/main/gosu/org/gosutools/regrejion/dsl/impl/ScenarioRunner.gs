@@ -31,7 +31,8 @@ class ScenarioRunner {
     var accumulator = new ArrayList<Map<String, ActualResult>>()
     _scenario.Preparations.each( \ elt : Preparation -> {
       print("elt=${elt}")
-      accumulator.add(runOne("type foo"))
+      elt.run()
+      // accumulator.add(runOne("type foo")) // @TODO remove this scaffolding
     })
 //    _scenario.Preparations.each( \ preparation : Preparation ->  {
 //      preparation.Runner = \x -> accumulator.add(runOne(x))

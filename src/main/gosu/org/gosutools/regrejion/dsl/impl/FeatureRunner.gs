@@ -39,29 +39,41 @@ class FeatureRunner {
     _feature.StepsBeforeEachScenario.each( \ step : Step -> {
       step.Runner = \ x -> accumulator.add(runOne(x))
       step.run()
+
     })
-    var scenario1label = new HashMap<String, ActualResult>()
-    scenario1label.put("stdout", new ActualResult() { :Contents = {"${_feature.FirstScenario}"}})
-    accumulator.add(scenario1label)
+    var firstScenarioLabel = new HashMap<String, ActualResult>()
+
+    var fs = _feature.FirstScenario
+
+    new ScenarioRunner(_feature.FirstScenario).run()
+
+    firstScenarioLabel.put("stdout", new ActualResult() { :Contents = {"${_feature.FirstScenario}"}})
+    accumulator.add(firstScenarioLabel)
+
+
     _feature.StepsAfterEachScenario.each( \ step : Step -> {
       step.Runner = \ x -> accumulator.add(runOne(x))
       step.run()
     })
+
     _feature.MoreScenarios.each( \ scenario : BuiltScenario -> {
       _feature.StepsBeforeEachScenario.each( \ step : Step -> {
         step.Runner = \ x ->  accumulator.add(runOne(x))
         step.run()
       })
 
-      var scenarioNlabel = new HashMap<String, ActualResult>()
-      scenarioNlabel.put("stdout", new ActualResult() { :Contents = {"${scenario}"}})
-      accumulator.add(scenarioNlabel)
+      var moreScenariosLabel = new HashMap<String, ActualResult>()
+      moreScenariosLabel.put("stdout", new ActualResult() { :Contents = {"${scenario}"}})
+      accumulator.add(moreScenariosLabel)
+
+      new ScenarioRunner(scenario).run()
 
       _feature.StepsAfterEachScenario.each( \ step : Step -> {
         step.Runner = \ x -> accumulator.add(runOne(x))
         step.run()
       })
     })
+
     _feature.StepsAfterLastScenario.each( \ step : Step ->  {
       step.Runner = \ x -> accumulator.add(runOne(x))
       step.run()

@@ -13,13 +13,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.double
+package org.gosutools.regrejion.dsl.doubles
 
-uses org.gosutools.regrejion.dsl.steps.Preparation
+uses org.gosutools.regrejion.dsl.steps.Subject
 
-class SpyPreparation extends Preparation {
-   var _ran : Boolean as Ran = false
-  override function run() {
-    _ran = true
-  }
+class DummySubject extends Subject {
+  // @TODO throw exception if methods called
 }

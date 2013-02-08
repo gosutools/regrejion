@@ -13,11 +13,12 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.dsl.double
+package org.gosutools.regrejion.dsl.doubles
 
-uses org.gosutools.regrejion.dsl.steps.Verification
-class SpyVerification extends Verification {
-  var _ran : Boolean as Ran = false
+uses org.gosutools.regrejion.dsl.steps.Preparation
+
+class SpyPreparation extends Preparation {
+   var _ran : Boolean as Ran = false
   override function run() {
     _ran = true
   }

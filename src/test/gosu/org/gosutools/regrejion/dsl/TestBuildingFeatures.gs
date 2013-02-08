@@ -17,16 +17,16 @@ package org.gosutools.regrejion.dsl
 
 uses junit.framework.TestCase
 uses org.fest.assertions.Assertions
+uses org.gosutools.regrejion.dsl.common.SubjectFeatureFactory
+uses org.gosutools.regrejion.dsl.doubles.DummyScenario
 uses org.gosutools.regrejion.dsl.impl.BuiltFeature
+uses org.gosutools.regrejion.dsl.impl.BuiltScenario
 uses org.gosutools.regrejion.dsl.impl.FeatureInspector
 uses org.gosutools.regrejion.dsl.steps.builtin.EchoEnvironmentVariable
 uses org.gosutools.regrejion.dsl.steps.builtin.EchoMessageStdout
 uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.dsl.steps.Subject
 uses org.gosutools.regrejion.dsl.steps.Verification
-uses org.gosutools.regrejion.dsl.impl.BuiltScenario
-uses org.gosutools.regrejion.dsl.double.DummyScenario
-uses org.gosutools.regrejion.dsl.common.SubjectFeatureFactory
 
 class TestBuildingFeatures extends TestCase {
 
