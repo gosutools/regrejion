@@ -67,4 +67,6 @@ class TestWithoutInstall extends TestCase {
     subject.run()
     // @TODO verify run -- currently missing scenario execution of subject and verifications
   }
+
+
 }
