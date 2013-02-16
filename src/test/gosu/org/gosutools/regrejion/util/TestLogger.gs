@@ -1,6 +1,5 @@
-package org.gosutools.regrejion.util
-/*
-    Copyright 2013 Michael A. Wright
+/**
+    Copyright (c) 2013 Michael A. Wright.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -14,20 +13,18 @@ package org.gosutools.regrejion.util
     See the License for the specific language governing permissions and
     limitations under the License.
 */
+package org.gosutools.regrejion.util
+
 uses java.io.ByteArrayOutputStream
 uses org.fest.assertions.Assertions
 uses junit.framework.TestCase
 
 class TestLogger extends TestCase {
-
   function testLog() {
     var stream = new ByteArrayOutputStream()
     var subject = Logger.setLogger(stream)
-
     subject.log("stuff")
-
     var logged = stream.toString()
     Assertions.assertThat(logged).contains("stuff")
   }
-
 }

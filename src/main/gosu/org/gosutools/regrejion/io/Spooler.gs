@@ -1,6 +1,5 @@
-package org.gosutools.regrejion.io
-/*
-    Copyright 2013 Michael A. Wright
+/**
+    Copyright (c) 2013 Michael A. Wright.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -13,7 +12,9 @@ package org.gosutools.regrejion.io
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
+package org.gosutools.regrejion.io
+
 uses java.io.BufferedReader;
 uses java.io.InputStream;
 uses java.io.InputStreamReader;
@@ -21,11 +22,10 @@ uses java.lang.Runnable
 uses org.gosutools.regrejion.util.Logger
 
 class Spooler implements Runnable {
-  var _inStream : InputStream
+  var _inStream: InputStream
   var _logger = Logger.getLogger()
-  var _outStrings : List<String>
-
-  construct (inStream : InputStream, outStrings : List<String>) {
+  var _outStrings: List <String>
+  construct(inStream: InputStream, outStrings: List <String>) {
     _inStream = inStream;
     _outStrings = outStrings
   }
@@ -33,7 +33,7 @@ class Spooler implements Runnable {
   override function run() {
     try {
       var bufferedReader = new BufferedReader(new InputStreamReader(_inStream))
-      var line : String
+      var line: String
       _logger.log("Spooler: copying inStream=${_inStream} to outStrings=${_outStrings}")
       while (true) {
         line = bufferedReader.readLine()
@@ -48,5 +48,4 @@ class Spooler implements Runnable {
       _logger.log("Spooler: caught unexpected=${unexpected}")
     }
   }
-
 }

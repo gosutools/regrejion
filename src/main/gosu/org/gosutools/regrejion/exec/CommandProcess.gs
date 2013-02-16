@@ -1,6 +1,5 @@
-package org.gosutools.regrejion.exec
-/*
-    Copyright 2013 Michael A. Wright
+/**
+    Copyright (c) 2013 Michael A. Wright.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -13,7 +12,9 @@ package org.gosutools.regrejion.exec
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-*/
+ */
+package org.gosutools.regrejion.exec
+
 uses java.io.File
 uses java.lang.Process
 uses java.lang.StringBuilder
@@ -21,13 +22,11 @@ uses org.gosutools.regrejion.exec.CommandProcess
 uses org.gosutools.regrejion.util.Logger
 
 class CommandProcess {
-
-  var _command : String
+  var _command: String
   var _dir: File
   var _logger = Logger.getLogger()
-  var _process : Process
-
-  construct (command : String) {
+  var _process: Process
+  construct(command: String) {
     Logger.getLogger().log("CommandProcess.construct(${command})")
     _command = command
   }
@@ -59,13 +58,12 @@ class CommandProcess {
     _process = process
   }
 
-  function kill(reason : String) {
+  function kill(reason: String) {
     _logger.log("CommandProcess.kill(${reason}), killing process=${_process}")
     _process.destroy()
   }
 
-  override function toString() : String {
+  override function toString(): String {
     return "CommandProcess: command=${_command}, dir=${_dir}, process=${_process}"
   }
-
 }
