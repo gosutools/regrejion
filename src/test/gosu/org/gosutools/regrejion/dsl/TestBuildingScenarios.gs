@@ -16,6 +16,8 @@
 package org.gosutools.regrejion.dsl
 
 uses junit.framework.TestCase
+uses org.gosutools.regrejion.dsl.doubles.DummySubject
+uses org.gosutools.regrejion.dsl.doubles.DummyVerification
 uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.dsl.steps.Verification
 uses org.gosutools.regrejion.dsl.steps.Subject
@@ -23,17 +25,18 @@ uses org.fest.assertions.Assertions
 
 class TestBuildingScenarios extends TestCase {
   function testDegenerateScenario() {
+    var dummySubject = new DummySubject()
     var scenario = Scenario.named("degenerate")
         .withPurpose("test dsl builder")
         .withNoPreparationsBeforeSubject()
-        .withSubject(null)
-        .withVerificationsAfterSubject({null})
+        .withSubject(dummySubject)
+        .withVerificationsAfterSubject({new DummyVerification()})
         .build()
     Assertions.assertThat(scenario.Built).isTrue()
     Assertions.assertThat(scenario.Name).contains("degenerate")
     Assertions.assertThat(scenario.Purpose).contains("test dsl builder")
     Assertions.assertThat(scenario.Preparations).hasSize(0)
-    Assertions.assertThat(scenario.Subject).isEqualTo(null)
+    Assertions.assertThat(scenario.Subject).isEqualTo(dummySubject)
     Assertions.assertThat(scenario.Verifications).hasSize(1)
   }
 
