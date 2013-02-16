@@ -1,5 +1,5 @@
 /**
-    Copyright 2013 Michael A. Wright
+    Copyright (c) 2013 Michael A. Wright.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -15,12 +15,12 @@
  */
 package org.gosutools.regrejion.dsl.steps.builtin
 
-uses java.lang.System
 uses org.gosutools.regrejion.dsl.steps.Step
+uses org.gosutools.regrejion.dsl.steps.Verification
 
-class EchoMessageStdout extends Step {
-  var _message: String as Message
+class VerificationStep extends Verification {
+  var _step: Step as Step
   override function run() {
-    System.out.println(_message)
+    _step.run()
   }
 }
