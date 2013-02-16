@@ -1,5 +1,5 @@
 /**
-    Copyright (c) 2013 Michael A. Wright.
+    Copyright 2013 Michael A. Wright
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -13,22 +13,24 @@
     See the License for the specific language governing permissions and
     limitations under the License.
  */
-package org.gosutools.regrejion.io
+package org.gosutools.regrejion
 
-uses java.io.ByteArrayInputStream
-uses java.util.ArrayList
 uses junit.framework.TestCase
+uses org.gosutools.regrejion.dsl.steps.builtin.EchoMessageStdout
+uses org.gosutools.regrejion.dsl.steps.builtin.SubjectStep
 uses org.fest.assertions.Assertions
 
-class TestSpooler extends TestCase {
+class TestRegrejionScenario extends TestCase  {
 
-  function testRun() {
-    var testData = new ByteArrayInputStream("one\ntwo\nthree".getBytes("utf-8"))
-    var actualOutStrings = new ArrayList<String>()
-    var subject = new Spooler(testData, actualOutStrings)
-
-    subject.run()
-
-    Assertions.assertThat(actualOutStrings).hasSize(3)
+  function testBuild() {
+    var subject = new RegrejionScenario() {
+        :Name = "rs1name",
+        :Purpose = "rs1purpose",
+        :PreparationSteps = {},
+        :SubjectStep = new SubjectStep() { :Step = new EchoMessageStdout() { :Message = "hello world"} },
+        :VerificationSteps = {}
+    }.build()
+    Assertions.assertThat(subject.Name).isEqualTo("rs1name")
   }
+
 }

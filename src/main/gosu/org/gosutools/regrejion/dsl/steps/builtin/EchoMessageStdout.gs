@@ -15,8 +15,8 @@
  */
 package org.gosutools.regrejion.dsl.steps.builtin
 
-uses org.gosutools.regrejion.dsl.steps.Step
 uses java.lang.System
+uses org.gosutools.regrejion.dsl.steps.Step
 
 class EchoMessageStdout extends Step {
   var _message: String as Message

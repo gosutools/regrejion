@@ -1,5 +1,5 @@
 /**
-    Copyright 2013 Michael A. Wright
+    Copyright (c) 2013 Michael A. Wright.
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -21,6 +21,7 @@ uses org.gosutools.regrejion.impl.ActualResult
 uses org.gosutools.regrejion.dsl.steps.Preparation
 uses org.gosutools.regrejion.exec.CommandProcess
 uses org.gosutools.regrejion.exec.ProcessRunner
+uses org.gosutools.regrejion.dsl.steps.Verification
 
 class ScenarioRunner {
   var _scenario : BuiltScenario
@@ -29,15 +30,18 @@ class ScenarioRunner {
   }
   function run() {
     var accumulator = new ArrayList<Map<String, ActualResult>>()
+    // @TODO use accumulator
+    // @TODO handle exceptions
     _scenario.Preparations.each( \ elt : Preparation -> {
-      print("elt=${elt}")
+      print("preparation elt=${elt}")
       elt.run()
-      // accumulator.add(runOne("type foo")) // @TODO remove this scaffolding
     })
-//    _scenario.Preparations.each( \ preparation : Preparation ->  {
-//      preparation.Runner = \x -> accumulator.add(runOne(x))
-//      preparation.run()
-//    })
+    print("subject ${_scenario.Subject}")
+    _scenario.Subject.run()
+    _scenario.Verifications.each( \ elt : Verification -> {
+      print("verification elt=${elt}")
+      elt.run()
+    })
   }
 
  private function runOne(command : String) : Map<String,ActualResult> {
